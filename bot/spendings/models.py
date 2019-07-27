@@ -22,7 +22,7 @@ class Spending(models.Model):
         choices=CURRENCY_CHOICES,
         default=CURRENCY_RUB,
     )
-    labels = models.ManyToManyField('Label')
+    labels = models.ManyToManyField('Label', blank=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
@@ -30,12 +30,15 @@ class Spending(models.Model):
     )
     datetime = models.DateTimeField()
 
+    class Meta:
+        ordering = ('-datetime',)
+
     def __str__(self):
-        return '{owner}: {amount} {currency}'.format({
-            "owner": self.owner.get_full_name() if self.owner else '???',
-            "amount": self.amount,
-            "currency": self.currency,
-        })
+        return '{owner}: {amount} {currency}'.format(
+            owner=self.owner.get_full_name() if self.owner else '???',
+            amount=self.amount,
+            currency=self.currency,
+        )
 
 
 class Label(models.Model):
@@ -49,7 +52,8 @@ class Label(models.Model):
     synonym_of = models.ManyToManyField(
         "self",
         symmetrical=False,
-        related_name='+'
+        related_name='+',
+        blank=True,
     )
 
     def __str__(self):
