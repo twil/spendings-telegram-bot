@@ -16,6 +16,16 @@ class SpendingAdmin(admin.ModelAdmin):
 
         return mark_safe('<br>'.join(labels))
 
+    def get_changelist(self, request, **kwargs):
+        """
+        Return the ChangeList class for use on the changelist page.
+
+        We need to calculate total spent for the queryset.
+        """
+
+        from .views_admin import SpendingsChangeList
+        return SpendingsChangeList
+
 
 @admin.register(Label)
 class LabelAdmin(admin.ModelAdmin):

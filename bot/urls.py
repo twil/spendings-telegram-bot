@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
+# HACK:
+admin.site.site_title = 'Spending Bot Admin'
+admin.site.site_header = 'Spending Bot Admin'
+admin.site.index_title = 'Administration'
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
