@@ -23,6 +23,7 @@ class Spending(models.Model):
         default=CURRENCY_RUB,
     )
     labels = models.ManyToManyField('Label', blank=True)
+    # who spent money
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
